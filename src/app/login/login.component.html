@@ -1,0 +1,25 @@
+<div class="page" fxLayoutAlign="center center">
+    <div class="form" fxLayout="column" fxLayoutAlign="center stretch">
+        <h1>{{isCreatingMode ? 'Cadastre-se' : 'Faça login'}}</h1>
+        <form *ngIf="!isLoading" [formGroup]="form" fxLayout="column" fxLayoutAlign="center stretch">
+            <mat-form-field [fxHide]="!isCreatingMode">
+                <input formControlName="name" matInput placeholder="Nome" autocomplete="off"
+                    [required]="isCreatingMode">
+                <mat-error *ngIf="form.get('name').hasError('required')">Campo obrigatório</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="login" matInput placeholder="Login" autocomplete="off" required>
+                <mat-error *ngIf="form.get('login').hasError('required')">Campo obrigatório</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input formControlName="password" matInput placeholder="Senha" type="password" required>
+                <mat-error *ngIf="form.get('password').hasError('required')">Campo obrigatório</mat-error>
+            </mat-form-field>
+            <button (click)="authenticate()" class="confirm-btn" mat-raised-button color="primary"
+                fxLayoutAlign="center stretch">{{isCreatingMode ? 'Cadastrar' : 'Entrar'}}</button>
+        </form>
+        <span *ngIf="!isLoading" class="new-user-message"
+            (click)="switchFormMode()">{{isCreatingMode ? 'Já tenho cadastro' : 'Não tem cadastro?'}}</span>
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    </div>
+</div>
