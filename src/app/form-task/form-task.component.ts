@@ -49,7 +49,7 @@ export class FormTaskComponent implements OnInit {
     }
   }
 
-  save(): void {
+  saveAsync(): void {
     if (this.form.valid) {
       this.isLoading = true;
       this._taskService.save(this.form.getRawValue())

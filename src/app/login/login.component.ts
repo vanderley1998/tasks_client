@@ -72,7 +72,7 @@ export class LoginComponent {
   }
 
   createUserAsync(): void {
-    this._userService.create(this.form.getRawValue())
+    this._userService.save(this.form.getRawValue())
       .pipe(take(1))
       .subscribe((result: IOperationResult<IUser>) => {
         this.isLoading = false;

@@ -21,13 +21,15 @@ import { AppComponent } from './app.component';
 import { ListTasksComponent } from './list-tasks/list-tasks.component';
 import { FormTaskComponent } from './form-task/form-task.component';
 import { httpInterceptProviders } from './shared/http-interceptor/http-interceptor.service';
+import { FormUserComponent } from './form-user/form-user.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ListTasksComponent,
-    FormTaskComponent
+    FormTaskComponent,
+    FormUserComponent
   ],
   imports: [
     BrowserModule,

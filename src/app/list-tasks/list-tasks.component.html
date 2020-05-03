@@ -12,7 +12,7 @@
                 <mat-icon>refresh</mat-icon>
             </button>
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip *ngIf="userService.currentUser" color="accent" selected>Olá, {{userService.currentUser.name}}</mat-chip>
+                <mat-chip *ngIf="userService.currentUser" color="accent" selected (click)="openFormUserDialog()">Olá, {{userService.currentUser.name}}</mat-chip>
             </mat-chip-list>
             <button mat-icon-button (click)="userService.logout()">
                 <mat-icon>exit_to_app</mat-icon>

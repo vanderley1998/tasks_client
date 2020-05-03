@@ -39,8 +39,15 @@ export class UserService {
             })
     }
 
-    create(user: IUser): Observable<IOperationResult<IUser>> {
-        return this._httpClient.post<IOperationResult<IUser>>(`${environment.apiUrl}/users`, user);
+    save(user: IUser): Observable<IOperationResult<IUser>> {
+        if (user.id)
+            return this._httpClient.put<IOperationResult<IUser>>(`${environment.apiUrl}/users/session`, user);
+        else
+            return this._httpClient.post<IOperationResult<IUser>>(`${environment.apiUrl}/users`, user);
+    }
+
+    remove(user: IUser): Observable<IOperationResult<IUser>> {
+        return this._httpClient.delete<IOperationResult<IUser>>(`${environment.apiUrl}/users/session`);
     }
 
     saveToken(token: string): void {

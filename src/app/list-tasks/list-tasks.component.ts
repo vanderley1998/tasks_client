@@ -12,6 +12,7 @@ import { ITask } from '../shared/interfaces/task.interface';
 import { UserService } from '../shared/api/user.service';
 import { IChangeStatusTask } from '../shared/interfaces/change-status-task.interface';
 import { FormTaskComponent } from '../form-task/form-task.component';
+import { FormUserComponent } from '../form-user/form-user.component';
 
 @Component({
   selector: 'app-list-tasks',
@@ -148,6 +149,19 @@ export class ListTasksComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result)
         this.getAsync();
+    });
+  }
+
+  openFormUserDialog(): void {
+    const dialogRef = this._dialog.open(FormUserComponent, {
+      width: '50%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.userService.logout();
+      else
+        this._cdRef.detectChanges();
     });
   }
 }

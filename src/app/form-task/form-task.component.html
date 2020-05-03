@@ -15,5 +15,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button [disabled]="isLoading" mat-button mat-dialog-close>CANCELAR</button>
-    <button [disabled]="isLoading || form.invalid" mat-button (click)="save()">SALVAR</button>
+    <button [disabled]="isLoading || form.invalid" color="primary" mat-button (click)="saveAsync()">SALVAR</button>
 </mat-dialog-actions>
