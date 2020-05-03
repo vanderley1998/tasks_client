@@ -39,10 +39,16 @@ export class TaskService {
             });
     }
 
-    create(task: ITask): Observable<IOperationResult<ITask>> {
-        return this._httpClient.post<IOperationResult<ITask>>(`${environment.apiUrl}/tasks`, task,
-            {
-                headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
-            });
+    save(task: ITask): Observable<IOperationResult<ITask>> {
+        if (task.id)
+            return this._httpClient.put<IOperationResult<ITask>>(`${environment.apiUrl}/tasks/${task.id}`, task,
+                {
+                    headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
+                });
+        else
+            return this._httpClient.post<IOperationResult<ITask>>(`${environment.apiUrl}/tasks`, task,
+                {
+                    headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
+                });
     }
 }

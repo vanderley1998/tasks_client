@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Cadastrar nova tarefa</h2>
+<h2 mat-dialog-title>{{isEditMode ? 'Editar tarefa' : 'Cadastrar nova tarefa'}}</h2>
 <mat-dialog-content>
     <form [formGroup]="form" fxLayout="column" fxLayoutAlign=" stretch">
         <mat-form-field>

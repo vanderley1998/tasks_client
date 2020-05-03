@@ -133,9 +133,10 @@ export class ListTasksComponent implements OnInit {
     }
   }
 
-  openFormTaskDialog(): void {
+  openFormTaskDialog(task?: ITask): void {
     const dialogRef = this._dialog.open(FormTaskComponent, {
-      width: '50%'
+      width: '50%',
+      data: task
     });
 
     dialogRef.afterClosed().subscribe(result => {
