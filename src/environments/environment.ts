@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://vanderju-001-site1.itempurl.com/api'
+  apiUrl: 'https://localhost:44399/api'
 };
 
 /*
