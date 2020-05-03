@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IToken } from '../shared/interfaces/token.interface';
 import { IUser } from '../shared/interfaces/user.interface';
 import { Router } from '@angular/router';
+import { ELimitCaracteres } from '../shared/enums/limit-caracteres.enum';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,8 @@ export class LoginComponent {
   isLoading = false;
   isCreatingMode = false;
 
+  limitCaracteresEnum = ELimitCaracteres;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _userService: UserService,
@@ -31,7 +34,7 @@ export class LoginComponent {
     private _router: Router
   ) {
     this.form = _formBuilder.group({
-      login: [null, [Validators.required]],
+      login: [null, [Validators.required, Validators.maxLength(ELimitCaracteres.login)]],
       name: [null],
       password: [null, [Validators.required]]
     })
@@ -87,9 +90,9 @@ export class LoginComponent {
   switchFormMode(): void {
     this.isCreatingMode = !this.isCreatingMode;
     if (this.isCreatingMode)
-      this.form.get('name').setValidators([Validators.required])
+      this.form.get('name').setValidators([Validators.required, Validators.maxLength(ELimitCaracteres.short)])
     else
-      this.form.get('name').setValidators([])
+      this.form.get('name').setValidators([Validators.maxLength(ELimitCaracteres.short)])
     this._cdRef.detectChanges();
   }
 }

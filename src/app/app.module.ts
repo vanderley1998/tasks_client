@@ -11,18 +11,21 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
 import { ListTasksComponent } from './list-tasks/list-tasks.component';
+import { FormTaskComponent } from './form-task/form-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ListTasksComponent
+    ListTasksComponent,
+    FormTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import { ListTasksComponent } from './list-tasks/list-tasks.component';
     MatSnackBarModule,
     MatToolbarModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

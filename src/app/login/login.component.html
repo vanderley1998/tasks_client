@@ -4,19 +4,21 @@
         <h1 *ngIf="isLoading">Carregando...</h1>
         <form *ngIf="!isLoading" [formGroup]="form" fxLayout="column" fxLayoutAlign="center stretch">
             <mat-form-field [fxHide]="!isCreatingMode">
-                <input formControlName="name" matInput placeholder="Nome" autocomplete="off"
+                <input #nameRef formControlName="name" matInput placeholder="Nome" autocomplete="off"
                     [required]="isCreatingMode">
                 <mat-error *ngIf="form.get('name').hasError('required')">Campo obrigatório</mat-error>
+                <mat-error *ngIf="nameRef.value.length > limitCaracteresEnum.short">Limite de caracteres: {{nameRef.value.length}}/{{limitCaracteresEnum.short}}</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input formControlName="login" matInput placeholder="Login" autocomplete="off" required>
+                <input #loginRef formControlName="login" matInput placeholder="Login" autocomplete="off" required>
                 <mat-error *ngIf="form.get('login').hasError('required')">Campo obrigatório</mat-error>
+                <mat-error *ngIf="loginRef.value.length > limitCaracteresEnum.login">Limite de caracteres: {{loginRef.value.length}}/{{limitCaracteresEnum.login}}</mat-error>
             </mat-form-field>
             <mat-form-field>
                 <input formControlName="password" matInput placeholder="Senha" type="password" required>
                 <mat-error *ngIf="form.get('password').hasError('required')">Campo obrigatório</mat-error>
             </mat-form-field>
-            <button (click)="authenticate()" class="confirm-btn" mat-raised-button color="primary"
+            <button [disabled]="form.invalid" (click)="authenticate()" class="confirm-btn" mat-raised-button color="primary"
                 fxLayoutAlign="center stretch">{{isCreatingMode ? 'Cadastrar' : 'Entrar'}}</button>
         </form>
         <span *ngIf="!isLoading" class="new-user-message"

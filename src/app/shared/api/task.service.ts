@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { IOperationResult } from '../interfaces/operation-result.interface';
 import { ITask } from '../interfaces/task.interface';
 import { UserService } from './user.service';
+import { IChangeStatusTask } from '../interfaces/change-status-task.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
@@ -22,5 +23,26 @@ export class TaskService {
                 'Authorization': `Bearer ${this._userService.getToken()}`
             }
         });
+    }
+
+    changeStatus(changedStatus: IChangeStatusTask): Observable<IOperationResult<IChangeStatusTask>> {
+        return this._httpClient.patch<IOperationResult<IChangeStatusTask>>(`${environment.apiUrl}/tasks/${changedStatus.id}`, changedStatus,
+            {
+                headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
+            });
+    }
+
+    remove(id: number): Observable<IOperationResult<IChangeStatusTask>> {
+        return this._httpClient.delete<IOperationResult<IChangeStatusTask>>(`${environment.apiUrl}/tasks/${id}`,
+            {
+                headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
+            });
+    }
+
+    create(task: ITask): Observable<IOperationResult<ITask>> {
+        return this._httpClient.post<IOperationResult<ITask>>(`${environment.apiUrl}/tasks`, task,
+            {
+                headers: { 'Authorization': `Bearer ${this._userService.getToken()}` }
+            });
     }
 }
