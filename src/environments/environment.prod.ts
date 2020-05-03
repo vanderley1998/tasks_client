@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://localhost:44399/api'
+  apiUrl: 'http://vanderju-001-site1.itempurl.com/api'
 };
