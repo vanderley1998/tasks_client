@@ -55,10 +55,13 @@ export class LoginComponent {
     const { login, password } = this.form.getRawValue();
     this._userService.auth({ login, password })
       .pipe(take(1))
-      .subscribe((result: IOperationResult<IToken>) => {
+      .subscribe(async (result: IOperationResult<IToken>) => {
         this.isLoading = false;
         this._userService.saveToken(result.data[0].token);
-        this._router.navigate(['list-tasks']);
+        await this._userService.getCurrentUser();
+        if (this._userService.currentUser) {
+          this._router.navigate(['list-tasks']);
+        }
         this._cdRef.detectChanges();
       }, (error: HttpErrorResponse) => {
         this.isLoading = false;

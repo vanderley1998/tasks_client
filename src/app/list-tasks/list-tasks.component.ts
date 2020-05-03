@@ -35,7 +35,13 @@ export class ListTasksComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.init();
     this.getAsync();
+  }
+
+  async init(): Promise<void> {
+    if (!this.userService.currentUser)
+      await this.userService.getCurrentUser();
   }
 
   getAsync(): void {

@@ -44,7 +44,7 @@ export class FormTaskComponent implements OnInit {
   checkModeDialog(): void {
     if (this.dataDialog) {
       this.isEditMode = true;
-      const { id, title, description } = this.dataDialog;
+      const { id, title, description = '' } = this.dataDialog;
       this.form.setValue({ id, title, description });
     }
   }

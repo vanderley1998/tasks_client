@@ -11,7 +11,11 @@ export class HttpInterceptorService implements HttpInterceptor {
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const authReq = req.clone({ setHeaders: { Authorization: `Bearer ${this._userService.getToken()}` } });
+        const token = this._userService.getToken();
+        if (!token)
+            return next.handle(req);
+
+        const authReq = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
         return next.handle(authReq);
     }
 

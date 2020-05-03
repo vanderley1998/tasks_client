@@ -18,7 +18,7 @@
                 <input formControlName="password" matInput placeholder="Senha" type="password" required>
                 <mat-error *ngIf="form.get('password').hasError('required')">Campo obrigatório</mat-error>
             </mat-form-field>
-            <button [disabled]="form.invalid" (click)="authenticate()" class="confirm-btn" mat-raised-button color="primary"
+            <button (click)="authenticate()" class="confirm-btn" mat-raised-button color="primary"
                 fxLayoutAlign="center stretch">{{isCreatingMode ? 'Cadastrar' : 'Entrar'}}</button>
         </form>
         <span *ngIf="!isLoading" class="new-user-message"
