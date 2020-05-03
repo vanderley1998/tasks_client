@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Dados do usuário</h1>
+<mat-dialog-content>
+    <div class="form" fxLayout="column" fxLayoutAlign="center stretch">
+        <form [formGroup]="form" fxLayout="column" fxLayoutAlign="center stretch">
+            <mat-form-field>
+                <input #nameRef formControlName="name" matInput placeholder="Nome" autocomplete="off">
+                <mat-error *ngIf="form.get('name').hasError('required')">Campo obrigatório</mat-error>
+                <mat-error *ngIf="nameRef.value.length > limitCaracteresEnum.short">Limite de caracteres: {{nameRef.value.length}}/{{limitCaracteresEnum.short}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input #loginRef formControlName="login" matInput placeholder="Login" autocomplete="off" required>
+                <mat-error *ngIf="form.get('login').hasError('required')">Campo obrigatório</mat-error>
+                <mat-error *ngIf="loginRef.value.length > limitCaracteresEnum.login">Limite de caracteres: {{loginRef.value.length}}/{{limitCaracteresEnum.login}}</mat-error>
+            </mat-form-field>
+            <mat-form-field [fxHide]="!form.dirty">
+                <input formControlName="password" matInput placeholder="Confirme a senha" type="password" required [readonly]="!form.dirty">
+                <mat-hint>Confirme sua senha para salvar as alterações</mat-hint>
+                <mat-error *ngIf="form.get('password').hasError('required')">Campo obrigatório</mat-error>
+            </mat-form-field>
+        </form>
+        <mat-progress-bar *ngIf="isLoading" mode="buffer"></mat-progress-bar>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="confirm-btn" mat-button fxLayoutAlign="center stretch" (click)="dialogRef.close()">CANCELAR</button>
+    <button class="confirm-btn" mat-button color="warn" fxLayoutAlign="center stretch" (click)="removeAsync()" [disabled]="isLoading">EXCLUIR</button>
+    <button *ngIf="form.dirty" class="confirm-btn" mat-button color="primary" fxLayoutAlign="center stretch" (click)="saveAsync()" [disabled]="isLoading || form.invalid">SALVAR</button>
+</mat-dialog-actions>
