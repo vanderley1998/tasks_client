@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+        <span fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon [style.margin-right.px]="14">list</mat-icon>
+            <span>Luby Tasks</span>
+        </span>
+        <button mat-icon-button (click)="userService.logout()">
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div *ngIf="!isLoading" fxLayoutAlign="center center">
+    <table class="list-tasks" mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="concluded">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-checkbox [checked]="element.concluded"></mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Título </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+        <ng-container matColumnDef="createDate">
+            <th mat-header-cell *matHeaderCellDef> Data de criação </th>
+            <td mat-cell *matCellDef="let element"> {{element.createDate | date: "dd/MM/yyyy HH:mm"}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef> Opções</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button>
+                    <mat-icon>delete</mat-icon>
+                </button></td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -2,14 +2,14 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { take } from 'rxjs/operators/'
+import { take } from 'rxjs/internal/operators/take';
 
 import { UserService } from '../shared/api/user.service';
 import { IOperationResult } from '../shared/interfaces/operation-result.interface';
-import { IUserCredentials } from '../shared/interfaces/user-credentials.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IToken } from '../shared/interfaces/token.interface';
 import { IUser } from '../shared/interfaces/user.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,8 @@ export class LoginComponent {
     private _formBuilder: FormBuilder,
     private _userService: UserService,
     private _snackBar: MatSnackBar,
-    private cdRef: ChangeDetectorRef
+    private _cdRef: ChangeDetectorRef,
+    private _router: Router
   ) {
     this.form = _formBuilder.group({
       login: [null, [Validators.required]],
@@ -37,7 +38,6 @@ export class LoginComponent {
   }
 
   authenticate(): void {
-    console.log(this.form)
     if (this.form.valid) {
       this.isLoading = true;
       this.isCreatingMode ? this.createUserAsync() : this.loginAsync()
@@ -54,13 +54,14 @@ export class LoginComponent {
       .pipe(take(1))
       .subscribe((result: IOperationResult<IToken>) => {
         this.isLoading = false;
-        this._userService.token = result.data[0].token;
-        this.cdRef.detectChanges();
+        this._userService.saveToken(result.data[0].token);
+        this._router.navigate(['list-tasks']);
+        this._cdRef.detectChanges();
       }, (error: HttpErrorResponse) => {
         this.isLoading = false;
         if (error.status === 401)
           this._snackBar.open('Login ou senha incorretos', null, { duration: 5000 })
-        this.cdRef.detectChanges();
+        this._cdRef.detectChanges();
       })
   }
 
@@ -69,14 +70,17 @@ export class LoginComponent {
       .pipe(take(1))
       .subscribe((result: IOperationResult<IUser>) => {
         this.isLoading = false;
-        this.cdRef.detectChanges();
+        this.loginAsync();
+        this._cdRef.detectChanges();
       }, (error: HttpErrorResponse) => {
         this.isLoading = false;
         if (error.status === 400)
           this._snackBar.open('Nem todos os campos foram preenchidos corretamente', null, { duration: 5000 })
         if (error.status === 401)
           this._snackBar.open('Login ou senha incorretos', null, { duration: 5000 })
-        this.cdRef.detectChanges();
+        if (error.status === 409)
+          this._snackBar.open(`Já existe um usuário com o login "${this.form.get('login').value}"`, null, { duration: 5000 })
+        this._cdRef.detectChanges();
       })
   }
 
@@ -86,6 +90,6 @@ export class LoginComponent {
       this.form.get('name').setValidators([Validators.required])
     else
       this.form.get('name').setValidators([])
-    this.cdRef.detectChanges();
+    this._cdRef.detectChanges();
   }
 }

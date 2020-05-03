@@ -8,13 +8,15 @@ import { IUserCredentials } from '../interfaces/user-credentials.interface';
 import { IOperationResult } from '../interfaces/operation-result.interface';
 import { IToken } from '../interfaces/token.interface';
 import { IUser } from '../interfaces/user.interface';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-    token: string;
+    currentUser: IUser;
 
     constructor(
+        private _router: Router,
         private _httpClient: HttpClient
     ) { }
 
@@ -24,5 +26,22 @@ export class UserService {
 
     create(user: IUser): Observable<IOperationResult<IUser>> {
         return this._httpClient.post<IOperationResult<IUser>>(`${environment.apiUrl}/users`, user);
+    }
+
+    saveToken(token: string): void {
+        localStorage.setItem('token', token);
+    }
+
+    getToken(): string {
+        return localStorage.getItem('token');
+    }
+
+    cleanToken(): void {
+        localStorage.removeItem('token');
+    }
+
+    logout(): void {
+        localStorage.removeItem('token');
+        this._router.navigate(['login']);
     }
 }

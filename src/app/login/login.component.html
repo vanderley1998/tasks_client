@@ -1,6 +1,7 @@
 <div class="page" fxLayoutAlign="center center">
     <div class="form" fxLayout="column" fxLayoutAlign="center stretch">
-        <h1>{{isCreatingMode ? 'Cadastre-se' : 'Faça login'}}</h1>
+        <h1 *ngIf="!isLoading">{{isCreatingMode ? 'Cadastre-se' : 'Faça login'}}</h1>
+        <h1 *ngIf="isLoading">Carregando...</h1>
         <form *ngIf="!isLoading" [formGroup]="form" fxLayout="column" fxLayoutAlign="center stretch">
             <mat-form-field [fxHide]="!isCreatingMode">
                 <input formControlName="name" matInput placeholder="Nome" autocomplete="off"
