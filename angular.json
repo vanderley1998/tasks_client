@@ -67,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "lubytasks:build"
+            "browserTarget": "lubytasks:build",
+            "port": 4399
           },
           "configurations": {
             "production": {
